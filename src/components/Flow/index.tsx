@@ -12,7 +12,7 @@ import ReactFlow, {
 } from "reactflow";
 import CustomNode from "./CustomNode";
 
-import styles from "./Flow.module.css";
+import styles from "../../styles/Flow.module.css";
 import SideBar from "./SideBar";
 
 let id = 0;
@@ -22,20 +22,8 @@ const initialNodes: Node[] = [
   {
     id: "1",
     type: "input",
-    data: { label: "Node 1" },
+    data: { label: "Start" },
     position: { x: 250, y: 5 },
-  },
-  {
-    id: "2",
-    data: { label: "Node 2" },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: "3",
-    data: { label: "Node 3" },
-    position: { x: 400, y: 100 },
-    type: "custom",
-    className: styles.customNode,
   },
 ];
 
@@ -100,6 +88,7 @@ function Flow() {
     <>
       <ReactFlowProvider>
         <div className={styles.flow} ref={reactFlowWrapper}>
+          <SideBar />
           <ReactFlow
             onInit={setReactFlowInstance}
             nodes={nodes}
@@ -115,7 +104,6 @@ function Flow() {
             onDragOver={onDragOver}
           />
           <Controls />
-          <SideBar />
         </div>
       </ReactFlowProvider>
     </>

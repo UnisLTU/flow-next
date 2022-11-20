@@ -1,4 +1,5 @@
 import React from "react";
+import styles from '../../styles/SideBar.module.css'
 
 const SideBar = () => {
   const onDragStart = (event: any, nodeType: any) => {
@@ -12,10 +13,11 @@ const SideBar = () => {
         You can drag these nodes to the pane on the right.
       </div>
       <div
+      className={styles.node}
         onDragStart={(event) => onDragStart(event, "custom")}
         draggable
       >
-        Node
+        Add New Node
       </div>
     </aside>
   );

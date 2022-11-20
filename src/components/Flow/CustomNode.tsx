@@ -1,5 +1,6 @@
 import { memo, FC, useState } from "react";
 import { Handle, Position, NodeProps } from "reactflow";
+import styles from "../../styles/Flow.module.css"
 
 const CustomNode: FC<NodeProps> = ({ data }) => {
   const [edit, setEdit] = useState(true);
@@ -12,14 +13,13 @@ const CustomNode: FC<NodeProps> = ({ data }) => {
 
   const finishEdit = () => {
     setEdit((prev) => !prev);
-    console.log("nu")
     setMessage(newMessage)
   }
 
   return (
     <>
       <Handle type="target" position={Position.Top} />
-      <div>
+      <div className={styles.customNode}>
         {edit ? (
           <div id={data.id} onDoubleClick={handleEdit}>
             Message: <strong>{message}</strong>
