@@ -59,7 +59,7 @@ function Flow() {
     (event:any) => {
       event.preventDefault();
 
-      const reactFlowBounds:ReactFlow = reactFlowWrapper.current?.getBoundingClientRect();
+      const reactFlowBounds:any = reactFlowWrapper.current?.getBoundingClientRect();
       const type = event.dataTransfer.getData("application/reactflow");
 
       if (typeof type === "undefined" || !type) {
@@ -77,7 +77,7 @@ function Flow() {
         data: { label: "New Node" },
       };
 
-      setNodes((nds: ReactFlow) => nds.concat(newNode));
+      setNodes((nds: any) => nds.concat(newNode));
     },
     [reactFlowInstance]
   );
