@@ -1,11 +1,11 @@
 import { memo, FC, useState } from "react";
 import { Handle, Position, NodeProps } from "reactflow";
-import styles from "../../styles/Flow.module.css"
+import styles from "../../styles/Flow.module.css";
 
 const CustomNode: FC<NodeProps> = ({ data }) => {
   const [edit, setEdit] = useState(true);
-  const [newMessage, setNewMessage] = useState<any>();
   const [message, setMessage] = useState<string>(data.label);
+  const [newMessage, setNewMessage] = useState<any>(data.label);
 
   const handleEdit = (e: React.SyntheticEvent) => {
     setEdit((prev) => !prev);
@@ -13,11 +13,11 @@ const CustomNode: FC<NodeProps> = ({ data }) => {
 
   const finishEdit = () => {
     setEdit((prev) => !prev);
-    setMessage(newMessage)
-  }
+    setMessage(newMessage);
+  };
 
   return (
-    <>
+    <div>
       <Handle type="target" position={Position.Top} />
       <div className={styles.customNode}>
         {edit ? (
@@ -28,14 +28,14 @@ const CustomNode: FC<NodeProps> = ({ data }) => {
           <div>
             <textarea
               defaultValue={message}
-              onChange = {(e) => setNewMessage(e.currentTarget.value)}
+              onChange={(e) => setNewMessage(e.currentTarget.value)}
             />
             <button onClick={finishEdit}> Go </button>
           </div>
         )}
       </div>
       <Handle type="source" position={Position.Bottom} />
-    </>
+    </div>
   );
 };
 

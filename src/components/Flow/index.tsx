@@ -15,8 +15,8 @@ import CustomNode from "./CustomNode";
 import styles from "../../styles/Flow.module.css";
 import SideBar from "./SideBar";
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+let id = 2;
+const getId = () => `${id++}`;
 
 const initialNodes: Node[] = [
   {
@@ -27,10 +27,7 @@ const initialNodes: Node[] = [
   },
 ];
 
-const initialEdges: Edge[] = [
-  { id: "e1-2", source: "1", target: "2" },
-  { id: "e1-3", source: "1", target: "3" },
-];
+const initialEdges: Edge[] = [];
 
 const nodeTypes = {
   custom: CustomNode,
@@ -76,7 +73,7 @@ function Flow() {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: "New Node" },
       };
 
       setNodes((nds: any) => nds.concat(newNode));
@@ -84,12 +81,18 @@ function Flow() {
     [reactFlowInstance]
   );
 
+  const resetData: any = () => {
+    setNodes(initialNodes);
+    setEdges(initialEdges);
+  };
+
   return (
     <>
       <ReactFlowProvider>
         <div className={styles.flow} ref={reactFlowWrapper}>
-          <SideBar />
+          <SideBar resetData={resetData} />
           <ReactFlow
+            deleteKeyCode={["Backspace", "Delete"]}
             onInit={setReactFlowInstance}
             nodes={nodes}
             onNodesChange={onNodesChange}
