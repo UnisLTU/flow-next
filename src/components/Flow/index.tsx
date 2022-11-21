@@ -89,8 +89,8 @@ function Flow() {
 
   const data: any = []
 
-  data.push({allnodes: nodes[0]})
-  data.push({alledges: edges[0]})
+  data.push({allnodes: nodes})
+  data.push({alledges: edges})
 
   console.log(data)
 
