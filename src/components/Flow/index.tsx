@@ -39,24 +39,24 @@ const defaultEdgeOptions = {
 };
 
 function Flow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState<ReactFlow>(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<ReactFlow>(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlow>(null);
+  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
-  
+
   const onConnect = useCallback(
-    (params: Connection | Edge) => setEdges((eds: ReactFlow) => addEdge(params, eds)),
+    (params: Connection | Edge) => setEdges((eds:any) => addEdge(params, eds)),
     [setEdges]
   );
 
-  const onDragOver = useCallback((event: ReactFlow) => {
+  const onDragOver = useCallback((event:any) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
-    (event: ReactFlow) => {
+    (event:any) => {
       event.preventDefault();
 
       const reactFlowBounds:ReactFlow = reactFlowWrapper.current?.getBoundingClientRect();
