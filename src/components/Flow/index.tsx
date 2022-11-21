@@ -82,12 +82,12 @@ function Flow() {
     [reactFlowInstance]
   );
 
-  const resetData: ReactFlow = () => {
+  const resetData = () => {
     setNodes(initialNodes);
     setEdges(initialEdges);
   };
 
-  const data:any = []
+  const data: any = []
 
   data.push({allnodes: nodes[0]})
   data.push({alledges: edges[0]})
