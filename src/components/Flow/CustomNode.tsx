@@ -5,9 +5,9 @@ import styles from "../../styles/Flow.module.css";
 const CustomNode: FC<NodeProps> = ({ data }) => {
   const [edit, setEdit] = useState(true);
   const [message, setMessage] = useState<string>(data.label);
-  const [newMessage, setNewMessage] = useState<any>(data.label);
+  const [newMessage, setNewMessage] = useState<string>(data.label);
 
-  const handleEdit = (e: React.SyntheticEvent) => {
+  const handleEdit = () => {
     setEdit((prev) => !prev);
   };
 

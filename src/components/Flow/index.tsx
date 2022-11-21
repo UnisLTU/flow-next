@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
 import ReactFlow, {
   Node,
   ReactFlowProvider,
@@ -39,26 +39,27 @@ const defaultEdgeOptions = {
 };
 
 function Flow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState<ReactFlow>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<ReactFlow>(initialEdges);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlow>(null);
 
+  
   const onConnect = useCallback(
-    (params: Connection | Edge) => setEdges((eds: any) => addEdge(params, eds)),
+    (params: Connection | Edge) => setEdges((eds: ReactFlow) => addEdge(params, eds)),
     [setEdges]
   );
 
-  const onDragOver = useCallback((event: any) => {
+  const onDragOver = useCallback((event: ReactFlow) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
-    (event: any) => {
+    (event: ReactFlow) => {
       event.preventDefault();
 
-      const reactFlowBounds:any = reactFlowWrapper.current?.getBoundingClientRect();
+      const reactFlowBounds:ReactFlow = reactFlowWrapper.current?.getBoundingClientRect();
       const type = event.dataTransfer.getData("application/reactflow");
 
       if (typeof type === "undefined" || !type) {
@@ -76,21 +77,38 @@ function Flow() {
         data: { label: "New Node" },
       };
 
-      setNodes((nds: any) => nds.concat(newNode));
+      setNodes((nds: ReactFlow) => nds.concat(newNode));
     },
     [reactFlowInstance]
   );
 
-  const resetData: any = () => {
+  const resetData: ReactFlow = () => {
     setNodes(initialNodes);
     setEdges(initialEdges);
+  };
+
+  const data:any = []
+
+  data.push({allnodes: nodes[0]})
+  data.push({alledges: edges[0]})
+
+  console.log(data)
+
+  const exportData = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(data)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "data.json";
+    link.click();
   };
 
   return (
     <>
       <ReactFlowProvider>
         <div className={styles.flow} ref={reactFlowWrapper}>
-          <SideBar resetData={resetData} />
+          <SideBar resetData={resetData} exportData={exportData}/>
           <ReactFlow
             deleteKeyCode={["Backspace", "Delete"]}
             onInit={setReactFlowInstance}
