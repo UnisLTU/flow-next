@@ -1,9 +1,14 @@
 .node {
-    margin: 10px;
-    border: 1px solid #555;
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-    border-radius: 5px;
-    background-color: ;
-  }
+  margin: 10px;
+  padding: 12px;
+  border: 1px solid #555;
+  width: 200px;
+  text-align: center;
+  align-self: center;
+  border-radius: 5px;
+  background-color: ;
+}
+
+.drag {
+  padding: 0px;
+}

@@ -13,6 +13,7 @@ export const NewNode = () => {
       draggable
     >
       Add New Node
+      <div className={styles.drag}>Drag to viewport</div>
     </div>
   )
 }

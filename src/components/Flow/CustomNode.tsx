@@ -6,6 +6,7 @@ const CustomNode: FC<NodeProps> = ({ data }) => {
   const [edit, setEdit] = useState(true);
   const [message, setMessage] = useState<string>(data.label);
   const [newMessage, setNewMessage] = useState<string>(data.label);
+  
 
   const handleEdit = () => {
     setEdit((prev) => !prev);

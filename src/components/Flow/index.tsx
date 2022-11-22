@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useCallback, useRef, useState } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import ReactFlow, {
   Node,
   ReactFlowProvider,
@@ -43,6 +43,7 @@ function Flow() {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+  
 
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds: any) => addEdge(params, eds)),
@@ -111,6 +112,7 @@ function Flow() {
     };
     
   };
+
 
 
   return (
