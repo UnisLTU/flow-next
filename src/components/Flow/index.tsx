@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useState } from "react";
+import React, {useCallback, useRef, useState } from "react";
 import ReactFlow, {
   Node,
   ReactFlowProvider,
@@ -8,7 +8,7 @@ import ReactFlow, {
   Connection,
   Edge,
   ConnectionLineType,
-  Controls,
+  Controls
 } from "reactflow";
 import CustomNode from "./CustomNode";
 
@@ -43,7 +43,6 @@ function Flow() {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
-  
 
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds: any) => addEdge(params, eds)),
@@ -132,6 +131,7 @@ function Flow() {
             defaultEdgeOptions={defaultEdgeOptions}
             connectionLineType={ConnectionLineType.SmoothStep}
             fitView
+            snapToGrid
             onDrop={onDrop}
             onDragOver={onDragOver}
           />

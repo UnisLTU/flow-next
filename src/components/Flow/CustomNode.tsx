@@ -11,7 +11,7 @@ const CustomNode: FC<NodeProps> = ({ data }) => {
   const handleEdit = () => {
     setEdit((prev) => !prev);
   };
-
+  
   const finishEdit = () => {
     setEdit((prev) => !prev);
     setMessage(newMessage);
