@@ -11,6 +11,7 @@ const SideBar = (props: any) => {
         Reset
       </button>
       <button onClick={props.exportData} className={styles.save}>Export</button>
+      <input type="file" onChange={props.importData} className={styles.import}/>
     </div>
   );
 };

@@ -44,22 +44,22 @@ function Flow() {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
-
   const onConnect = useCallback(
-    (params: Connection | Edge) => setEdges((eds:any) => addEdge(params, eds)),
+    (params: Connection | Edge) => setEdges((eds: any) => addEdge(params, eds)),
     [setEdges]
   );
 
-  const onDragOver = useCallback((event:any) => {
+  const onDragOver = useCallback((event: any) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
-    (event:any) => {
+    (event: any) => {
       event.preventDefault();
 
-      const reactFlowBounds:any = reactFlowWrapper.current?.getBoundingClientRect();
+      const reactFlowBounds: any =
+        reactFlowWrapper.current?.getBoundingClientRect();
       const type = event.dataTransfer.getData("application/reactflow");
 
       if (typeof type === "undefined" || !type) {
@@ -87,14 +87,10 @@ function Flow() {
     setEdges(initialEdges);
   };
 
-  const data: any = []
-
-  data.push({allnodes: nodes})
-  data.push({alledges: edges})
-
-  console.log(data)
-
   const exportData = () => {
+    const data: any = [];
+    data.push({ nodes });
+    data.push({ edges });
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(data)
     )}`;
@@ -104,11 +100,24 @@ function Flow() {
     link.click();
   };
 
+  const importData = (e:any) => {
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], "UTF-8");
+    fileReader.onload = (e) => {
+      const fileResult: any = e.target?.result;
+      const parseResult = JSON.parse(fileResult)
+      setNodes(parseResult[0].nodes)
+      setEdges(parseResult[1].edges)
+    };
+    
+  };
+
+
   return (
     <>
       <ReactFlowProvider>
         <div className={styles.flow} ref={reactFlowWrapper}>
-          <SideBar resetData={resetData} exportData={exportData}/>
+          <SideBar resetData={resetData} exportData={exportData} importData={importData}/>
           <ReactFlow
             deleteKeyCode={["Backspace", "Delete"]}
             onInit={setReactFlowInstance}
