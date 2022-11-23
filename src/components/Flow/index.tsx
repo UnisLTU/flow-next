@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
   Node,
   ReactFlowProvider,
@@ -8,7 +8,7 @@ import ReactFlow, {
   Connection,
   Edge,
   ConnectionLineType,
-  Controls
+  Controls,
 } from "reactflow";
 import CustomNode from "./CustomNode";
 
@@ -66,6 +66,24 @@ function Flow() {
         return;
       }
 
+      const onSubmit = (e: any, text: string) => {
+        console.log(e.currentTarget.id);
+        console.log(text);
+        setNodes((nds) =>
+          nds.map((node) => {
+            if (node.id === e.currentTarget.id) {
+              // it's important that you create a new object here
+              // in order to notify react flow about the change
+              node.data = {
+                ...node.data,
+                label: text,
+              };
+            }
+            return node;
+          })
+        );
+      };
+
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
@@ -74,7 +92,7 @@ function Flow() {
         id: getId(),
         type,
         position,
-        data: { label: "New Node" },
+        data: { label: "New Node", onSubmit: onSubmit },
       };
 
       setNodes((nds: any) => nds.concat(newNode));
@@ -100,25 +118,26 @@ function Flow() {
     link.click();
   };
 
-  const importData = (e:any) => {
+  const importData = (e: any) => {
     const fileReader = new FileReader();
     fileReader.readAsText(e.target.files[0], "UTF-8");
     fileReader.onload = (e) => {
       const fileResult: any = e.target?.result;
-      const parseResult = JSON.parse(fileResult)
-      setNodes(parseResult[0].nodes)
-      setEdges(parseResult[1].edges)
+      const parseResult = JSON.parse(fileResult);
+      setNodes(parseResult[0].nodes);
+      setEdges(parseResult[1].edges);
     };
-    
   };
-
-
 
   return (
     <>
       <ReactFlowProvider>
         <div className={styles.flow} ref={reactFlowWrapper}>
-          <SideBar resetData={resetData} exportData={exportData} importData={importData}/>
+          <SideBar
+            resetData={resetData}
+            exportData={exportData}
+            importData={importData}
+          />
           <ReactFlow
             deleteKeyCode={["Backspace", "Delete"]}
             onInit={setReactFlowInstance}

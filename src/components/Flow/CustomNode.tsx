@@ -2,41 +2,49 @@ import { memo, FC, useState } from "react";
 import { Handle, Position, NodeProps } from "reactflow";
 import styles from "../../styles/Flow.module.css";
 
-const CustomNode: FC<NodeProps> = ({ data }) => {
-  const [edit, setEdit] = useState(true);
-  const [message, setMessage] = useState<string>(data.label);
-  const [newMessage, setNewMessage] = useState<string>(data.label);
-  
+const CustomNode: FC<NodeProps> = ({ id, data }) => {
+  const [show, setShow] = useState<boolean>(false);
+  const [text, setText] = useState<string>(data.label);
 
-  const handleEdit = () => {
-    setEdit((prev) => !prev);
-  };
-  
-  const finishEdit = () => {
-    setEdit((prev) => !prev);
-    setMessage(newMessage);
+  const changeShow = () => {
+    setShow(true);
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    data.onSubmit(e, text);
+    setShow(false);
+  };
   return (
-    <div>
-      <Handle type="target" position={Position.Top} />
-      <div className={styles.customNode}>
-        {edit ? (
-          <div id={data.id} onDoubleClick={handleEdit}>
-            Message: <strong>{message}</strong>
+    <>
+      {!show ? (
+        <div onDoubleClick={changeShow}>
+          <Handle type="target" position={Position.Top} />
+          <div className={styles.customNode}>
+            <div>
+              Text: <strong>{data.label}</strong>
+            </div>
           </div>
-        ) : (
-          <div>
-            <textarea
-              defaultValue={message}
-              onChange={(e) => setNewMessage(e.currentTarget.value)}
-            />
-            <button onClick={finishEdit}> Go </button>
-          </div>
-        )}
-      </div>
-      <Handle type="source" position={Position.Bottom} />
-    </div>
+          <Handle type="source" position={Position.Bottom} />
+        </div>
+      ) : (
+        <div className={styles.customNode}>
+          <Handle type="target" position={Position.Top} />
+          <form id={id} onSubmit={handleSubmit}>
+            <label>
+              Text:
+              <input
+                type="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </label>
+            <input type="submit" />
+          </form>
+          <Handle type="source" position={Position.Bottom} />
+        </div>
+      )}
+    </>
   );
 };
 
