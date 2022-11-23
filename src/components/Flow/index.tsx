@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import ReactFlow, {
   Node,
   ReactFlowProvider,
@@ -38,8 +38,13 @@ const defaultEdgeOptions = {
   type: "smoothstep",
 };
 
+
+type Nodes = Node[] & {
+  label: string;
+};
+
 function Flow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Nodes>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
