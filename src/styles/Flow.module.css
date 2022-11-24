@@ -8,13 +8,13 @@
   padding: 10px;
   width: 185px;
   border-radius: 5px;
-  background-color: #000
+  background-color: #000;
 }
 
 .customNode textarea {
   border: none;
   border-radius: 5px;
-  width: 164px
+  width: 164px;
 }
 
 .inputs {
@@ -22,12 +22,22 @@
   justify-content: space-between;
 }
 
-
 #submit {
   margin-top: 8px;
   height: 20px;
   border: none;
   border-radius: 5px;
+}
+
+.imgDiv {
+  margin-top: 10px;
+  position: relative;
+  width: 164px;
+  height: 164px;
+}
+
+.NoImgDiv {
+  display: none;
 }
 
 .bgColor {

@@ -1,10 +1,12 @@
 import { memo, FC, useState } from "react";
 import { Handle, Position, NodeProps } from "reactflow";
+import Image from "next/image";
 import styles from "../../styles/Flow.module.css";
 
 const CustomNode: FC<NodeProps> = ({ id, data }) => {
   const [show, setShow] = useState<boolean>(false);
   const [text, setText] = useState<string>(data.label);
+  const [url, setUrl] = useState<string>(data.url);
 
   const changeShow = () => {
     setShow(true);
@@ -12,7 +14,7 @@ const CustomNode: FC<NodeProps> = ({ id, data }) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    data.onSubmit(e, text);
+    data.onSubmit(e, text, url);
     setShow(false);
   };
 
@@ -28,6 +30,14 @@ const CustomNode: FC<NodeProps> = ({ id, data }) => {
           <div>
             <strong>{data.label}</strong>
           </div>
+          {data.url ? (
+            <div className={styles.imgDiv}>
+              <Image alt="img" src={data.url} sizes="100vw" layout="fill" />
+            </div>
+          ) : (
+            <div className={styles.NoImgDiv}></div>
+          )}
+
           <Handle type="source" position={Position.Bottom} />
         </div>
       ) : (
@@ -45,6 +55,14 @@ const CustomNode: FC<NodeProps> = ({ id, data }) => {
                 onChange={(e) => setText(e.target.value)}
               />
             </label>
+            <input
+              style={{ width: "164px", marginTop: "10px" }}
+              className="nodrag"
+              type="text"
+              placeholder="Image Url"
+              defaultValue={data.url}
+              onChange={(e) => setUrl(e.target.value)}
+            ></input>
             <div className={styles.inputs}>
               <input
                 id={styles.submit}

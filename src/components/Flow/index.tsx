@@ -40,7 +40,9 @@ const defaultEdgeOptions = {
 
 type Nodes = Node[] & {
   label: string;
-  bgColor: any
+  bgColor: string
+  url: string
+
 };
 
 function Flow() {
@@ -71,7 +73,7 @@ function Flow() {
         return;
       }
 
-      const onSubmit = (e: any, text: string) => {
+      const onSubmit = (e: any, text: string, url: string) => {
         setNodes((nds) =>
           nds.map((node) => {
             if (node.id === e.currentTarget.id) {
@@ -80,11 +82,14 @@ function Flow() {
               node.data = {
                 ...node.data,
                 label: text,
+                url: url,
               };
             }
             return node;
           })
         );
+
+        console.log(nodes)
       };
 
       const onChangeColor = (e: any, bgColor : any) => {
@@ -116,7 +121,8 @@ function Flow() {
           label: "New Node",
           onSubmit: onSubmit,
           onChangeColor: onChangeColor,
-          bgColor: '#1A192B'
+          bgColor: "#1A192B",
+          url : ""
         },
       };
 
@@ -179,7 +185,6 @@ function Flow() {
             connectionLineType={ConnectionLineType.SmoothStep}
             fitView
             snapToGrid
-    
             onDrop={onDrop}
             onDragOver={onDragOver}
           />
