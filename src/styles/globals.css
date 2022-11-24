@@ -36,15 +36,7 @@ header {
   }
 }
 
-.react-flow__node:hover {
-  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 10px 0px;
+.nodrag {
+  resize: none;
 }
 
-.react-flow__node:active {
-  box-shadow: rgba(255, 21, 21, 0.2) 0px 0px 10px 0px;
-}
-
-.react-flow__node:focus
-{
-  box-shadow: rgba(21, 76, 255, 0.2) 0px 0px 10px 0px;
-}

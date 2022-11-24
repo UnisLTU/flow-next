@@ -5,6 +5,7 @@ import { NewNode } from "./NewNode";
 const SideBar = (props: any) => {
   return (
     <div className={styles.sidebar}>
+      
       <NewNode />
       <button className={styles.reset} onClick={props.resetData}>
         Reset
@@ -16,6 +17,7 @@ const SideBar = (props: any) => {
         <input type="file" onChange={props.importData} accept="json" />
         <div>Import .json file</div>
       </div>
+      
     </div>
   );
 };

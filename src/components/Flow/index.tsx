@@ -38,9 +38,9 @@ const defaultEdgeOptions = {
   type: "smoothstep",
 };
 
-
 type Nodes = Node[] & {
   label: string;
+  bgColor: any
 };
 
 function Flow() {
@@ -72,8 +72,6 @@ function Flow() {
       }
 
       const onSubmit = (e: any, text: string) => {
-        console.log(e.currentTarget.id);
-        console.log(text);
         setNodes((nds) =>
           nds.map((node) => {
             if (node.id === e.currentTarget.id) {
@@ -89,6 +87,23 @@ function Flow() {
         );
       };
 
+      const onChangeColor = (e: any, bgColor : any) => {
+        setNodes((nds) =>
+          nds.map((node) => {
+            if (node.id === e.currentTarget.id) {
+              // it's important that you create a new object here
+              // in order to notify react flow about the change
+              node.data = {
+                ...node.data,
+                bgColor: e.target.value,
+              };
+            }
+            return node;
+          })
+        );
+
+      }
+
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
@@ -97,7 +112,12 @@ function Flow() {
         id: getId(),
         type,
         position,
-        data: { label: "New Node", onSubmit: onSubmit },
+        data: {
+          label: "New Node",
+          onSubmit: onSubmit,
+          onChangeColor: onChangeColor,
+          bgColor: '#1A192B'
+        },
       };
 
       setNodes((nds: any) => nds.concat(newNode));
@@ -134,6 +154,9 @@ function Flow() {
     };
   };
 
+
+
+
   return (
     <>
       <ReactFlowProvider>
@@ -156,6 +179,7 @@ function Flow() {
             connectionLineType={ConnectionLineType.SmoothStep}
             fitView
             snapToGrid
+    
             onDrop={onDrop}
             onDragOver={onDragOver}
           />
