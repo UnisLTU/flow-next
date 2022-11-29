@@ -10,10 +10,13 @@ import ReactFlow, {
   ConnectionLineType,
   Controls,
 } from "reactflow";
-import CustomNode from "./CustomNode";
+
+import {consol} from "../../../src/components/Flow/components/utils"
+
 
 import styles from "../../styles/Flow.module.css";
-import SideBar from "./SideBar";
+import CustomNode from "./Sidebar/CustomNode/CustomNode";
+import SideBar from "./Sidebar/SideBar";
 
 let id = 2;
 const getId = () => `${id++}`;
@@ -40,9 +43,8 @@ const defaultEdgeOptions = {
 
 type Nodes = Node[] & {
   label: string;
-  bgColor: string
-  url: string
-
+  bgColor: string;
+  url: string;
 };
 
 function Flow() {
@@ -56,7 +58,7 @@ function Flow() {
     [setEdges]
   );
 
-  const onDragOver = useCallback((event: any) => {
+ const onDragOver = useCallback((event: any) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
@@ -89,10 +91,10 @@ function Flow() {
           })
         );
 
-        console.log(nodes)
+        console.log(nodes);
       };
 
-      const onChangeColor = (e: any, bgColor : any) => {
+      const onChangeColor = (e: any) => {
         setNodes((nds) =>
           nds.map((node) => {
             if (node.id === e.currentTarget.id) {
@@ -106,8 +108,7 @@ function Flow() {
             return node;
           })
         );
-
-      }
+      };
 
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
@@ -122,7 +123,7 @@ function Flow() {
           onSubmit: onSubmit,
           onChangeColor: onChangeColor,
           bgColor: "#1A192B",
-          url : ""
+          url: "",
         },
       };
 
@@ -134,6 +135,7 @@ function Flow() {
   const resetData = () => {
     setNodes(initialNodes);
     setEdges(initialEdges);
+    consol()
   };
 
   const exportData = () => {
@@ -159,9 +161,6 @@ function Flow() {
       setEdges(parseResult[1].edges);
     };
   };
-
-
-
 
   return (
     <>

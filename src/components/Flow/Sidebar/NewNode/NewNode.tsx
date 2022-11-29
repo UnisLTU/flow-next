@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../styles/NewNode.module.css'
+import styles from '../../../../styles/NewNode.module.css'
 
 export const NewNode = () => {
     const onDragStart = (event: any, nodeType: any) => {
